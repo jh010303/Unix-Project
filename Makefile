@@ -4,7 +4,7 @@ CLIENT_OBJS = client.o init_socket.o handle_error.o
 SERVER_OBJS = server.o init_socket.o handle_error.o
 
 client: $(CLIENT_OBJS)
-	gcc -o client $(CLIENT_OBJS)
+	gcc -o client $(CLIENT_OBJS) -lpthread
 
 server: $(SERVER_OBJS)
 	gcc -o server $(SERVER_OBJS)
@@ -23,4 +23,3 @@ handle_error.o: handle_error.c handle_error.h
 
 clean:
 	rm -f client server $(CLIENT_OBJS) $(SERVER_OBJS)
-	
