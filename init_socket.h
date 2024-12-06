@@ -1,0 +1,1 @@
+void init_socket(int *sd, char *str,int portnum, struct sockaddr_in *sinn);
