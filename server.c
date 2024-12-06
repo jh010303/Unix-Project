@@ -9,13 +9,9 @@
 
 #define PORTNUM 9005
 
-struct user_info{
-    char username[20];
-};
-
 // TCP 서버 
 int main(){
-    char buf[BUFSIZ];
+    char buf[BUFSIZ],name1[20],name2[20];
     struct sockaddr_in sin,cli1,cli2;
     int sd,cd1,cd2,clientlen = sizeof(cli1);
     
@@ -56,12 +52,11 @@ int main(){
     printf("client1 connected\n");
 
     // client1의 username 받음
-    if(recv(cd1,buf,sizeof(buf),0)==-1){
+    if(recv(cd1,name1,sizeof(name1),0)==-1){
         perror("recv");
         exit(1);
     }
-
-    printf("%s connected\n",buf);
+    printf("%s connected\n",name1);
 
     // client 2 연결됨
     if((cd2 = accept(sd,(struct sockaddr*)&cli2, &clientlen))==-1){
@@ -72,20 +67,26 @@ int main(){
     printf("client2 connected\n");
 
     // client2의 username 받음
-    if(recv(cd2,buf,sizeof(buf),0)==-1){
+    if(recv(cd2,name2,sizeof(name2),0)==-1){
         perror("recv");
         exit(1);
     }
 
-    printf("%s connected\n",buf);
+    printf("%s connected\n",name2);
 
     send(cd1,&cli2,sizeof(cli2),0);
+    send(cd1,&name2,sizeof(name2),0);
+    sleep(0.2);
+    send(cd1, "LISTEN", 6, 0);
+    sleep(0.5);
     send(cd2,&cli1,sizeof(cli1),0);
+    send(cd2,&name1,sizeof(name1),0);
+    sleep(0.2);
+    send(cd2, "CONNECT", 7, 0);
 
     printf("Client1 and Client2 is interconnected\n");
     close(cd1);
     close(cd2);
     close(sd);
-
     return 0;
 }
