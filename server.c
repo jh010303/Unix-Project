@@ -44,12 +44,12 @@ int main(){
     send(cd1,&cli2,sizeof(cli2),0); // client1에게 client2 소캣 구조체 전송
     send(cd1,&name2,sizeof(name2),0); // client1에게 client2 닉네임 전송
     sleep(0.2);
-    send(cd1, "LISTEN", 6, 0); // client1은 server 역할
+    send(cd1, "LISTEN", 7, 0); // client1은 server 역할
     sleep(0.5);
     send(cd2,&cli1,sizeof(cli1),0); 
     send(cd2,&name1,sizeof(name1),0);
     sleep(0.2);
-    send(cd2, "CONNECT", 7, 0); // client2는 client 역할
+    send(cd2, "CONNECT", 8, 0); // client2는 client 역할
     printf("Client1 and Client2 is interconnected\n");
     close(cd1);
     close(cd2);
